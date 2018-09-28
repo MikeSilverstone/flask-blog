@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, request
 from forms.forms import LoginForm
 from models.models import User, Post
 from globals.globals import app
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 
 
 @app.route("/")
@@ -52,6 +52,7 @@ def register():
 
 
 @app.route("/user/<string:username>", methods=['GET', 'POST'])
+@login_required
 def user(username):
     u = User()
     user = u.get_user(username=username)
