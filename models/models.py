@@ -18,6 +18,11 @@ class User(UserMixin, db.Model):
                             lazy='dynamic',
                             primaryjoin="User.id == Post.user_id")
 
+    def __init__(self, new_user=False, username=None, email=None):
+        if new_user:
+            self.username = username
+            self.email = email
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 

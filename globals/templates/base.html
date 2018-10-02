@@ -11,15 +11,22 @@
     <a class="navbar-brand" href="/">Home</a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            {% if current_user.username %}
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('user', username='mike')}}">Mike</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('login')}}">Login</a>
+                <a class="nav-link" href="{{url_for('user', username='{{current_user.username}}')}}">Mike</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
             </li>
+
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('login')}}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('register')}}">Register</a>
+            </li>
+            {% endif %}
         </ul>
 
             {% if current_user.username %}

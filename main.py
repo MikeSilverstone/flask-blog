@@ -1,7 +1,7 @@
 import sys
 sys.path.append('/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages')
 from flask import render_template, flash, redirect, request
-from forms.forms import LoginForm
+from forms.forms import LoginForm, RegistrationForm
 from models.models import User, Post
 from globals.globals import app
 from flask_login import current_user, login_user, logout_user, login_required
@@ -45,10 +45,19 @@ def logout():
     return redirect('/')
 
 
-@app.route("/register", methods=['GET', 'POST'])  # TODO
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    form = LoginForm()
-    return None
+    form = RegistrationForm()
+
+    if form.validate_on_submit():
+        user = User(True, form.username.data, form.email.data)
+        user.set_password(form.password.data)
+        user.add_user()
+        return user.get_user(form.username.data)
+
+    flash_errors(form.errors.items())
+
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route("/user/<string:username>", methods=['GET', 'POST'])
@@ -75,3 +84,9 @@ def user(username):
         return render_template('user_page.html', username=user.username, posts=posts)
 
     return "user not found"  # TODO change the custom 404
+
+
+def flash_errors(items):
+    for field, errors in items:
+        for error in errors:
+            flash(error)

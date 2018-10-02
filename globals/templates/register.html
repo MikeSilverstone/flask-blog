@@ -12,7 +12,15 @@
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.password2.label }}<br>
+            {{ form.password2(size=32) }}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+        </p>
+        <p>
+            {{ form.submit() }}</p>
     </form>
 {% endblock %}
